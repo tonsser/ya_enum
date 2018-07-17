@@ -1,0 +1,24 @@
+PATH
+  remote: .
+  specs:
+    smart_enum (0.1.0)
+      takes_macro (>= 1.0.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    minitest (5.11.3)
+    rake (10.5.0)
+    takes_macro (1.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.16)
+  minitest (~> 5.0)
+  rake (~> 10.0)
+  smart_enum!
+
+BUNDLED WITH
+   1.16.1
