@@ -1,5 +1,7 @@
 # SmartEnum
 
+**NOTE:** This gem is not stable yet. Use at your own risk.
+
 Easily define enums in Ruby that aren't just symbols. Your enums can have associated values and methods. Imagine if Ruby had Rust's or Swift's enums.
 
 ## Installation
@@ -20,7 +22,126 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Basic API for defining enums:
+
+```ruby
+module Colors
+  extend SmartEnum
+
+  variant :Red do
+    def rgb
+      [255, 0, 0]
+    end
+  end
+
+  variant :Blue do
+    def rgb
+      [0, 0, 255]
+    end
+  end
+end
+
+p Colors::Red.rgb # => [255, 0, 0]
+p Colors::Blue.rgb # => [0, 0, 255]
+```
+
+You can also define methods outside the variants, which will be inherited by each variant
+
+```ruby
+module Colors
+  extend SmartEnum
+
+  variant :Red do
+    def rgb
+      [max, 0, 0]
+    end
+  end
+
+  variant :Blue do
+    def rgb
+      [0, 0, max]
+    end
+  end
+
+  def max
+    255
+  end
+end
+
+p Colors::Blue.rgb # => [0, 0, 255]
+p Colors::Blue.max # 255
+```
+
+Enums can also have associated values:
+
+```ruby
+module Colors
+  extend SmartEnum
+
+  variant :Red, [:max] do
+    def rgb
+      [max, 0, 0]
+    end
+  end
+
+  variant :Blue, [:max] do
+    def rgb
+      [0, 0, max]
+    end
+  end
+end
+
+p Colors::Red.new(max: 255).rgb # => [255, 0, 0]
+p Colors::Blue.new(max: 255).rgb # => [0, 0, 255]
+```
+
+Enums can also be used in `case` statements:
+
+```ruby
+module Colors
+  extend SmartEnum
+
+  variant :Red, [:max]
+  variant :Blue, [:max]
+end
+
+color = Colors::Red.new(max: 255)
+
+case color
+when Colors::Red
+  puts "red!"
+when Colors::Blue
+  puts "blue!"
+else
+  raise "Unknown case"
+end # => red!
+```
+
+If you forget to implement a method for a variant you'll get an exception:
+
+```ruby
+module Colors
+  extend SmartEnum
+
+  variant :Red, [:max] do
+    def rgb
+      [max, 0, 0]
+    end
+  end
+
+  variant :Blue, [:max] do
+  end
+end
+
+# Traceback (most recent call last):
+#         5: from readme.rb:3:in `<main>'
+#         4: from readme.rb:12:in `<module:Colors>'
+#         3: from .../smart_enum/lib/smart_enum.rb:35:in `variant'
+#         2: from .../smart_enum/lib/smart_enum.rb:49:in `ensure_all_methods_defined_for_each_variant!'
+#         1: from .../smart_enum/lib/smart_enum.rb:49:in `each'
+# .../smart_enum/lib/smart_enum.rb:54:in `block in ensure_all_methods_defined_for_each_variant!': Variant Blue is missing the following methods: (SmartEnum::MissingMethods)
+#   rgb
+```
 
 ## Development
 
