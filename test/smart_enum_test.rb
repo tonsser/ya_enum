@@ -178,4 +178,90 @@ class SmartEnumTest < Minitest::Test
     assert_equal ({ red: 255, green: 0, blue: 0 }), colors::Red.new(value: nil).rgb_values
     assert_equal 255, colors::Red.new(value: nil).max
   end
+
+  def test_matching
+    colors = Module.new do
+      extend SmartEnum
+
+      variant :Red
+      variant :Blue
+    end
+
+    color = colors::Red
+
+    result = colors.case color do
+      on colors::Red do
+        :ok
+      end
+
+      on colors::Blue do
+        :err
+      end
+    end
+
+    assert_equal :ok, result
+  end
+
+  def test_matching_with_associated_values
+    colors = Module.new do
+      extend SmartEnum
+
+      variant :Red, [:value]
+      variant :Blue, [:value]
+    end
+
+    color = colors::Red.new(value: 123)
+
+    result = colors.case color do
+      on colors::Red do
+        :ok
+      end
+
+      on colors::Blue do
+        :err
+      end
+    end
+
+    assert_equal :ok, result
+  end
+
+  def test_no_match_raises
+    colors = Module.new do
+      extend SmartEnum
+
+      variant :Red
+      variant :Blue
+    end
+
+    result = colors.case nil do
+      on colors::Red do
+        :ok
+      end
+
+      on colors::Blue do
+        :err
+      end
+    end
+
+    assert_nil result
+  end
+
+  def test_matches_are_exhaustive
+    colors = Module.new do
+      extend SmartEnum
+
+      variant :Red
+      variant :Blue
+    end
+
+    color = colors::Red
+
+    assert_raises(SmartEnum::Matcher::NonExhaustiveMatch) do
+      colors.case color do
+        on colors::Red do
+          :ok
+        end
+      end
+    end
+  end
 end

@@ -1,5 +1,6 @@
 require "takes_macro"
 require "smart_enum/version"
+require "smart_enum/matcher"
 
 module SmartEnum
   attr_accessor :variants
@@ -8,8 +9,6 @@ module SmartEnum
     if variants.nil?
       self.variants = []
     end
-
-    containing_class = self
 
     enum = Class.new do
       extend TakesMacro
@@ -33,6 +32,12 @@ module SmartEnum
     const_set(name, enum)
     variants << [name.to_s, enum]
     ensure_all_methods_defined_for_each_variant!
+  end
+
+  def case(variant, &block)
+    matcher = Matcher.new(all_variants: variants)
+    matcher.instance_eval(&block)
+    matcher.match_on(variant)
   end
 
   private

@@ -135,6 +135,56 @@ end
 #   rgb
 ```
 
+You can also use the `.case` method to ensure you're handling all cases
+
+```ruby
+module Colors
+  extend SmartEnum
+
+  variant :Red
+  variant :Blue
+end
+
+color = Colors::Red
+
+Colors.case(color) do
+  on(Colors::Red) do
+    puts "red!"
+  end
+
+  on(Colors::Blue) do
+    puts "blue!"
+  end
+end
+```
+
+This is different from a normal `case` statement because you'll get an `SmartEnum::Matcher::NonExhaustiveMatch` exception if you forget to handle a case:
+
+```ruby
+module Colors
+  extend SmartEnum
+
+  variant :Red
+  variant :Blue
+end
+
+color = Colors::Red
+
+Colors.case(color) do
+  on(Colors::Red) do
+    puts "red!"
+  end
+end
+
+# Traceback (most recent call last):
+#         5: from readme.rb:12:in `<main>'
+#         4: from .../smart_enum/lib/smart_enum.rb:42:in `case'
+#         3: from .../smart_enum/lib/smart_enum/matcher.rb:13:in `match_on'
+#         2: from .../smart_enum/lib/smart_enum/matcher.rb:31:in `ensure_all_variants_handled!'
+#         1: from .../smart_enum/lib/smart_enum/matcher.rb:31:in `each'
+# .../smart_enum/lib/smart_enum/matcher.rb:33:in `block in ensure_all_variants_handled!': Variant Blue is not handled (SmartEnum::Matcher::NonExhaustiveMatch)
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
