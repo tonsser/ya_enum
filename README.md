@@ -6,19 +6,11 @@ Easily define enums in Ruby that aren't just symbols. Your enums can have associ
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Since this isn't published on rubygems.org yet, you'll have to 
 
-```ruby
-gem 'smart_enum'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install smart_enum
+1. Download the repo
+2. `bundle install`
+3. `rake install`
 
 ## Usage
 
