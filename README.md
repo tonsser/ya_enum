@@ -1,4 +1,4 @@
-# YaEnum
+# YaEnum (Yet Another Enum)
 
 **NOTE:** This gem is not stable yet. Use at your own risk.
 
