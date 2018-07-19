@@ -1,4 +1,4 @@
-module SmartEnum
+module YaEnum
   class Matcher
     def initialize(all_variants:)
       @cases = []

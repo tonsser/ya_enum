@@ -1,4 +1,4 @@
-# SmartEnum
+# YaEnum
 
 **NOTE:** This gem is not stable yet. Use at your own risk.
 
@@ -18,7 +18,7 @@ Basic API for defining enums:
 
 ```ruby
 module Colors
-  extend SmartEnum
+  extend YaEnum
 
   variant :Red do
     def rgb
@@ -41,7 +41,7 @@ You can also define methods outside the variants, which will be inherited by eac
 
 ```ruby
 module Colors
-  extend SmartEnum
+  extend YaEnum
 
   variant :Red do
     def rgb
@@ -68,7 +68,7 @@ Enums can also have associated values:
 
 ```ruby
 module Colors
-  extend SmartEnum
+  extend YaEnum
 
   variant :Red, [:max] do
     def rgb
@@ -91,7 +91,7 @@ Enums can also be used in `case` statements:
 
 ```ruby
 module Colors
-  extend SmartEnum
+  extend YaEnum
 
   variant :Red, [:max]
   variant :Blue, [:max]
@@ -113,7 +113,7 @@ If you forget to implement a method for a variant you'll get an exception:
 
 ```ruby
 module Colors
-  extend SmartEnum
+  extend YaEnum
 
   variant :Red, [:max] do
     def rgb
@@ -128,10 +128,10 @@ end
 # Traceback (most recent call last):
 #         5: from readme.rb:3:in `<main>'
 #         4: from readme.rb:12:in `<module:Colors>'
-#         3: from .../smart_enum/lib/smart_enum.rb:35:in `variant'
-#         2: from .../smart_enum/lib/smart_enum.rb:49:in `ensure_all_methods_defined_for_each_variant!'
-#         1: from .../smart_enum/lib/smart_enum.rb:49:in `each'
-# .../smart_enum/lib/smart_enum.rb:54:in `block in ensure_all_methods_defined_for_each_variant!': Variant Blue is missing the following methods: (SmartEnum::MissingMethods)
+#         3: from .../ya_enum/lib/ya_enum.rb:35:in `variant'
+#         2: from .../ya_enum/lib/ya_enum.rb:49:in `ensure_all_methods_defined_for_each_variant!'
+#         1: from .../ya_enum/lib/ya_enum.rb:49:in `each'
+# .../ya_enum/lib/ya_enum.rb:54:in `block in ensure_all_methods_defined_for_each_variant!': Variant Blue is missing the following methods: (YaEnum::MissingMethods)
 #   rgb
 ```
 
@@ -139,7 +139,7 @@ You can also use the `.case` method to ensure you're handling all cases
 
 ```ruby
 module Colors
-  extend SmartEnum
+  extend YaEnum
 
   variant :Red
   variant :Blue
@@ -158,11 +158,11 @@ Colors.case(color) do
 end
 ```
 
-This is different from a normal `case` statement because you'll get an `SmartEnum::Matcher::NonExhaustiveMatch` exception if you forget to handle a case:
+This is different from a normal `case` statement because you'll get an `YaEnum::Matcher::NonExhaustiveMatch` exception if you forget to handle a case:
 
 ```ruby
 module Colors
-  extend SmartEnum
+  extend YaEnum
 
   variant :Red
   variant :Blue
@@ -178,11 +178,11 @@ end
 
 # Traceback (most recent call last):
 #         5: from readme.rb:12:in `<main>'
-#         4: from .../smart_enum/lib/smart_enum.rb:42:in `case'
-#         3: from .../smart_enum/lib/smart_enum/matcher.rb:13:in `match_on'
-#         2: from .../smart_enum/lib/smart_enum/matcher.rb:31:in `ensure_all_variants_handled!'
-#         1: from .../smart_enum/lib/smart_enum/matcher.rb:31:in `each'
-# .../smart_enum/lib/smart_enum/matcher.rb:33:in `block in ensure_all_variants_handled!': Variant Blue is not handled (SmartEnum::Matcher::NonExhaustiveMatch)
+#         4: from .../ya_enum/lib/ya_enum.rb:42:in `case'
+#         3: from .../ya_enum/lib/ya_enum/matcher.rb:13:in `match_on'
+#         2: from .../ya_enum/lib/ya_enum/matcher.rb:31:in `ensure_all_variants_handled!'
+#         1: from .../ya_enum/lib/ya_enum/matcher.rb:31:in `each'
+# .../ya_enum/lib/ya_enum/matcher.rb:33:in `block in ensure_all_variants_handled!': Variant Blue is not handled (YaEnum::Matcher::NonExhaustiveMatch)
 ```
 
 ## Development
@@ -193,4 +193,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/tonsser/smart_enum
+Bug reports and pull requests are welcome on GitHub at https://github.com/tonsser/ya_enum

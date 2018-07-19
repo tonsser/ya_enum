@@ -1,8 +1,8 @@
 require "takes_macro"
-require "smart_enum/version"
-require "smart_enum/matcher"
+require "ya_enum/version"
+require "ya_enum/matcher"
 
-module SmartEnum
+module YaEnum
   attr_accessor :variants
 
   def variant(name, associated_values = [], &block)

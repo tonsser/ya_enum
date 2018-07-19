@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    smart_enum (0.1.0)
+    ya_enum (0.1.1)
       takes_macro (>= 1.0.0)
 
 GEM
@@ -18,7 +18,7 @@ DEPENDENCIES
   bundler (~> 1.16)
   minitest (~> 5.0)
   rake (~> 10.0)
-  smart_enum!
+  ya_enum!
 
 BUNDLED WITH
    1.16.1

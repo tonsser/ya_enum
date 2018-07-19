@@ -1,3 +1,3 @@
-module SmartEnum
+module YaEnum
   VERSION = "0.1.1"
 end

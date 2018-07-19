@@ -1,17 +1,16 @@
-
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "smart_enum/version"
+require "ya_enum/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "smart_enum"
-  spec.version       = SmartEnum::VERSION
+  spec.name          = "ya_enum"
+  spec.version       = YaEnum::VERSION
   spec.authors       = ["David Pedersen"]
   spec.email         = ["david.pdrsn@gmail.com"]
 
   spec.summary       = %q{Enums in Ruby}
   spec.description   = %q{Enums in Ruby, that aren't just Java enums. We can do better than that}
-  spec.homepage      = "http://github.com/tonsser/smart_enums"
+  spec.homepage      = "http://github.com/tonsser/ya_enum"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})

@@ -1,13 +1,13 @@
 require "test_helper"
 
-class SmartEnumTest < Minitest::Test
+class YaEnumTest < Minitest::Test
   def test_that_it_has_a_version_number
-    refute_nil ::SmartEnum::VERSION
+    refute_nil ::YaEnum::VERSION
   end
 
   def test_basic_interface
     colors = Module.new do
-      extend SmartEnum
+      extend YaEnum
 
       variant :Red do
         def rgb_values
@@ -33,7 +33,7 @@ class SmartEnumTest < Minitest::Test
 
   def test_associated_values
     deep_links = Module.new do
-      extend SmartEnum
+      extend YaEnum
 
       variant :User, [:user] do
         def url
@@ -52,9 +52,9 @@ class SmartEnumTest < Minitest::Test
   end
 
   def test_missing_implementation_of_method_for_variant
-    assert_raises(SmartEnum::MissingMethods) do
+    assert_raises(YaEnum::MissingMethods) do
       Module.new do
-        extend SmartEnum
+        extend YaEnum
 
         variant :Red do
           def rgb_values
@@ -72,9 +72,9 @@ class SmartEnumTest < Minitest::Test
   end
 
   def test_missing_implementation_of_method_for_variant_with_associated_value
-    assert_raises(SmartEnum::MissingMethods) do
+    assert_raises(YaEnum::MissingMethods) do
       Module.new do
-        extend SmartEnum
+        extend YaEnum
 
         variant :User, [:user] do
           def url
@@ -89,7 +89,7 @@ class SmartEnumTest < Minitest::Test
 
   def test_variants_work_in_case_statements
     colors = Module.new do
-      extend SmartEnum
+      extend YaEnum
 
       variant :Red
       variant :Blue
@@ -112,7 +112,7 @@ class SmartEnumTest < Minitest::Test
 
   def test_variants_work_in_case_statements_with_associated_values
     deep_links = Module.new do
-      extend SmartEnum
+      extend YaEnum
 
       variant :User, [:user]
       variant :Team, [:team]
@@ -135,7 +135,7 @@ class SmartEnumTest < Minitest::Test
 
   def test_inheriting_methods
     colors = Module.new do
-      extend SmartEnum
+      extend YaEnum
 
       variant :Red do
         def rgb_values
@@ -158,7 +158,7 @@ class SmartEnumTest < Minitest::Test
 
   def test_inheriting_methods_with_associated_values
     colors = Module.new do
-      extend SmartEnum
+      extend YaEnum
 
       variant :Red, [:value] do
         def rgb_values
@@ -181,7 +181,7 @@ class SmartEnumTest < Minitest::Test
 
   def test_matching
     colors = Module.new do
-      extend SmartEnum
+      extend YaEnum
 
       variant :Red
       variant :Blue
@@ -204,7 +204,7 @@ class SmartEnumTest < Minitest::Test
 
   def test_matching_with_associated_values
     colors = Module.new do
-      extend SmartEnum
+      extend YaEnum
 
       variant :Red, [:value]
       variant :Blue, [:value]
@@ -227,7 +227,7 @@ class SmartEnumTest < Minitest::Test
 
   def test_no_match_raises
     colors = Module.new do
-      extend SmartEnum
+      extend YaEnum
 
       variant :Red
       variant :Blue
@@ -248,7 +248,7 @@ class SmartEnumTest < Minitest::Test
 
   def test_matches_are_exhaustive
     colors = Module.new do
-      extend SmartEnum
+      extend YaEnum
 
       variant :Red
       variant :Blue
@@ -256,7 +256,7 @@ class SmartEnumTest < Minitest::Test
 
     color = colors::Red
 
-    assert_raises(SmartEnum::Matcher::NonExhaustiveMatch) do
+    assert_raises(YaEnum::Matcher::NonExhaustiveMatch) do
       colors.case color do
         on colors::Red do
           :ok
