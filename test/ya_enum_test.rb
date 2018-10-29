@@ -264,4 +264,24 @@ class YaEnumTest < Minitest::Test
       end
     end
   end
+
+  def test_all_variants
+    colors = Module.new do
+      extend YaEnum
+      variant :Red
+      variant :Blue
+    end
+
+    assert_equal colors.all_variants, [colors::Red, colors::Blue]
+  end
+
+  def test_all_variants_associated_value
+    colors = Module.new do
+      extend YaEnum
+      variant :Red, [:max]
+      variant :Blue, [:max]
+    end
+
+    assert_equal colors.all_variants, [colors::Red, colors::Blue]
+  end
 end

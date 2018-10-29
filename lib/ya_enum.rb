@@ -40,6 +40,10 @@ module YaEnum
     matcher.match_on(variant)
   end
 
+  def all_variants
+    variants.map(&:last)
+  end
+
   private
 
   def all_methods_from_all_variants
