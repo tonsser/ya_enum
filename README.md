@@ -147,12 +147,12 @@ end
 
 color = Colors::Red
 
-Colors.case(color) do
-  on(Colors::Red) do
+Colors.case(color) do |c|
+  c.on(Colors::Red) do
     puts "red!"
   end
 
-  on(Colors::Blue) do
+  c.on(Colors::Blue) do
     puts "blue!"
   end
 end
