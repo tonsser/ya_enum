@@ -284,4 +284,32 @@ class YaEnumTest < Minitest::Test
 
     assert_equal colors.all_variants, [colors::Red, colors::Blue]
   end
+
+  def test_matching_supports_calling_things_from_the_outer_scope
+    colors = Module.new do
+      extend YaEnum
+      variant :Red
+      variant :Blue
+    end
+
+    obj = Class.new do
+      def foo(colors, color)
+        colors.case(color) do |c|
+          c.on(colors::Red) { red }
+          c.on(colors::Blue) { blue }
+        end
+      end
+
+      def red
+        :red
+      end
+
+      def blue
+        :blue
+      end
+    end.new
+
+    assert_equal obj.foo(colors, colors::Red), :red
+    assert_equal obj.foo(colors, colors::Blue), :blue
+  end
 end

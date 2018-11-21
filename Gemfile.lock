@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ya_enum (0.1.1)
+    ya_enum (0.1.2)
       takes_macro (>= 1.0.0)
 
 GEM
@@ -21,4 +21,4 @@ DEPENDENCIES
   ya_enum!
 
 BUNDLED WITH
-   1.16.1
+   1.17.1

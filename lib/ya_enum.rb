@@ -36,7 +36,11 @@ module YaEnum
 
   def case(variant, &block)
     matcher = Matcher.new(all_variants: variants)
-    matcher.instance_eval(&block)
+    if block.arity.zero?
+      matcher.instance_eval(&block)
+    else
+      yield matcher
+    end
     matcher.match_on(variant)
   end
 
@@ -60,10 +64,11 @@ module YaEnum
 
       next if missing_methods.empty?
 
-      raise MissingMethods, <<~EOS
-        Variant #{name} is missing the following methods:
-          #{missing_methods.to_a.join(", ")}
-      EOS
+      raise(
+        MissingMethods,
+        "Variant #{name} is missing the following methods:\n" \
+          "  #{missing_methods.to_a.join(", ")}"
+      )
     end
   end
 
